@@ -94,14 +94,11 @@ def deploy(aws_eb_env_name: Optional[str] = None,
 
     _eb_ignore_exists = os.path.exists(path=_EB_IGNORE_FILE_NAME)
 
-    if _eb_ignore_exists:
-        assert os.path.isfile(_EB_IGNORE_FILE_NAME)
-
-    else:
+    if not _eb_ignore_exists:
         shutil.copyfile(
             src=_DJAI_AWS_EB_CLI_UTIL_DIR_PATH / _EB_IGNORE_FILE_NAME,
             dst=_EB_IGNORE_FILE_NAME)
-        assert os.path.isfile(_EB_IGNORE_FILE_NAME)
+    assert os.path.isfile(_EB_IGNORE_FILE_NAME)
 
     assert not os.path.exists(path=_PLATFORM_DIR_NAME)
     shutil.copytree(

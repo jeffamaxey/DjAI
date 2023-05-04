@@ -30,16 +30,14 @@ def get_git_repo_head_commit_hash(path: Optional[str] = None) -> str:
         return repo.head.commit.hexsha
 
     except InvalidGitRepositoryError:
-        if Path(_GIT_HASH_FILE_NAME).is_file():
-            with open(file=_GIT_HASH_FILE_NAME,
-                      mode='rt',
-                      buffering=-1,
-                      encoding='utf-8',
-                      errors='strict',
-                      newline=None,
-                      closefd=True,
-                      opener=None) as opened_file:
-                return opened_file.read()
-
-        else:
+        if not Path(_GIT_HASH_FILE_NAME).is_file():
             return None
+        with open(file=_GIT_HASH_FILE_NAME,
+                  mode='rt',
+                  buffering=-1,
+                  encoding='utf-8',
+                  errors='strict',
+                  newline=None,
+                  closefd=True,
+                  opener=None) as opened_file:
+            return opened_file.read()
